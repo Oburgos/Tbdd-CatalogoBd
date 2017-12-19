@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +13,7 @@ using ServerCatalogStudio.Api.Auth.Models;
 namespace ServerCatalogStudio.Api.Maestros.SistemasOperativos
 {
     [Produces("application/json")]
-    [Route("Maestros/SistemasOperativos")]
+    [Route("Maestros/Sistemas-Operativos")]
     [Authorize]
     public class SistemasOperativosController : Controller
     {
@@ -29,7 +28,7 @@ namespace ServerCatalogStudio.Api.Maestros.SistemasOperativos
         [HttpGet]
         public IEnumerable<SistemaOperativo> GetSistemasOperativos()
         {
-            return _context.SistemasOperativos;
+            return _context.SistemasOperativos.Where(x => x.Activo);
         }
 
         // GET: api/SistemasOperativos/5
@@ -104,12 +103,10 @@ namespace ServerCatalogStudio.Api.Maestros.SistemasOperativos
 
             if (EsRegistrado(sistemaOperativo.Descripcion))
             {
-                return BadRequest(new
-                {
-                    Descripcion = new string[] { "El sistema operativo ya se encuentra registrado." }
-                });
+                ModelState.AddModelError("Descripcion", "El sistema operativo ya se encuentra registrado.");
+                return BadRequest(ModelState);
             }
-
+            sistemaOperativo.Activo = true;
             sistemaOperativo.Descripcion = sistemaOperativo.Descripcion.Trim();
             sistemaOperativo.UsuarioAgregaId = _payload.Id;
 
@@ -121,7 +118,7 @@ namespace ServerCatalogStudio.Api.Maestros.SistemasOperativos
         bool EsRegistrado(string sistemaOperativo)
         {
             sistemaOperativo = sistemaOperativo.Trim();
-            return _context.SistemasOperativos.Any(s => s.Descripcion.ToLower() == sistemaOperativo.ToLower());
+            return _context.SistemasOperativos.Any(s => s.Descripcion.ToLower() == sistemaOperativo.ToLower() && s.Activo);
         }
 
         // DELETE: api/SistemasOperativos/5
@@ -138,8 +135,7 @@ namespace ServerCatalogStudio.Api.Maestros.SistemasOperativos
             {
                 return NotFound();
             }
-
-            _context.SistemasOperativos.Remove(sistemaOperativo);
+            sistemaOperativo.Activo = false;
             await _context.SaveChangesAsync();
 
             return Ok(sistemaOperativo);

@@ -1,0 +1,36 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <!-- <h4 class="title">Striped Table</h4> -->
+    </div>
+    <div class="content table-responsive table-full-width">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Descripcion</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td> {{item.id}} </td>
+            <td> {{item.descripcion}}</td>
+            <td>
+              <button class="btn btn-sm btn-fill" (click)="onClickModificar.emit(item)">
+                <span class="btn-label">
+                  <i class="fa fa-pencil"></i>
+                </span>
+              </button>
+              <button class="btn btn-sm btn-fill  btn-danger" (click)="eliminar(item)">
+                <span class="btn-label">
+                  <i class="fa fa-times"></i>
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

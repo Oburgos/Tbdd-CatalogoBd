@@ -37,7 +37,7 @@ namespace ServerCatalogStudio.Api
             {
                 o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            services.AddCors();
             services.AddSingleton<TokenService>();
 
         }
@@ -68,6 +68,10 @@ namespace ServerCatalogStudio.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+                 builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseAuthentication();
             app.UseMvc();
         }

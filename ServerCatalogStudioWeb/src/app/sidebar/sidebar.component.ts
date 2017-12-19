@@ -7,10 +7,13 @@ export interface RouteInfo {
     title: string;
     icon: string;
     class: string;
-}
+};
 
 export const ROUTES: RouteInfo[] = [
-    { path: 'dashboard', title: 'Dashboard',  icon: 'ti-panel', class: '' },
+    { path: 'servidores', title: 'Servidores',  icon: 'fa fa-server', class: '' },
+    { path: 'maestros/sistemas-operativos', title: 'Sistemas Operativos',  icon: 'ti-panel', class: '' },
+    { path: 'maestros/motores-bdd', title: 'Motores Bd',  icon: 'ti-server', class: '' },
+    { path: 'maestros/ambientes', title: 'Ambientes',  icon: 'fa fa-cubes', class: '' },
 ];
 
 @Component({

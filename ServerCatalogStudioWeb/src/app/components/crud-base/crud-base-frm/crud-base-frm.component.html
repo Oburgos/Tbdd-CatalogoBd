@@ -1,0 +1,23 @@
+<form action="" >
+  <div class="row">
+    <div class="form-group col-md-10">
+      <label>Descripción</label>
+      <dx-text-box #txtDescripcion [(value)]="model.descripcion" [maxLength]="50">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+
+    <div class="form-group col-md-2">
+      <label>Activo</label>
+      <br>
+      <div class="check-box-field">
+        <dx-check-box [(value)]="model.activo"></dx-check-box>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" (click)="guardar(model)" class="btn btn-fill btn-success">Guardar</button>
+  <button type="button" (click)="cancelar()" class="btn btn-fill  btn-danger">Cancelar</button>
+</form>

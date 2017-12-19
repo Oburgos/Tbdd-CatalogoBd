@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title" *ngIf="model.id === 0">Agregar</h4>
+          <h4 class="title" *ngIf="model.id !== 0">Modificar</h4>
+        </div>
+        <div class="content">
+          <app-crud-base-frm (onCreateItem)="onCreateItem($event)" [(model)]="model" [(crudTipo)]="crudTipo">
+          </app-crud-base-frm>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <app-crud-base-grid (onClickModificar)="onClickModificar($event)" [(crudTipo)]="crudTipo" [(items)]="gridItems">
+    </app-crud-base-grid>
+  </div>
+</div>

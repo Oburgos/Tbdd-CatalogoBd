@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title" *ngIf="modoAgregar">Agregar</h4>
+          <h4 class="title" *ngIf="!modoAgregar">Modificar</h4>
+        </div>
+        <div class="content">
+          <div>
+            <div class="row">
+              <div class="form-group col-md-9">
+                <label>Descripción</label>
+                <dx-text-box #txtDescripcion [(value)]="servidor.descripcion" [maxLength]="50">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+              <div class="form-group col-md-3 form-group-btn">
+                <button (click)="showModalConfiguarciones = true" class="btn btn-fill btn-block btn-primary">
+                  <i class="fa fa-cog"></i>
+                  Conexión
+                </button>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Sistema Operativo</label>
+                <dx-select-box #cmbSistemaOperativo [(value)]="servidor.sistemaOperativoId" [items]="sistemasOperativos" displayExpr="descripcion"
+                  valueExpr="id" [searchEnabled]="true">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="Debe seleccionar el sistema operativo del servidor"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-select-box>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Ambiente</label>
+                <dx-select-box #cmbAmbiente [(value)]="servidor.ambienteId" [items]="ambientes" displayExpr="descripcion" valueExpr="id"
+                  [searchEnabled]="true">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="Debe seleccionar el ambiente"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-select-box>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="header sub-header">
+                <h5>Recursos</h5>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Procesadores-Cores:</label>
+                <dx-number-box [(value)]="servidor.cores" [min]="1" [max]="32" [showSpinButtons]="true"></dx-number-box>
+              </div>
+              <div class="form-group col-md-4">
+                <label>RAM - GB:</label>
+                <dx-number-box [(value)]="servidor.ram" [min]="1" [max]="120" [showSpinButtons]="true"></dx-number-box>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Almacenamiento - GB:</label>
+                <dx-number-box [(value)]="servidor.almacenamiento" [min]="10" [max]="100000" [showSpinButtons]="true"></dx-number-box>
+              </div>
+            </div>
+
+            <button type="button" (click)="guardar(servidor )" class="btn btn-fill btn-success">Guardar</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<dx-popup class="popup" [width]="400" [height]="350" [showTitle]="true" title="Configuración de conexión" [dragEnabled]="false"
+  [closeOnOutsideClick]="false" [(visible)]="showModalConfiguarciones">
+  <div *dxTemplate="let data of 'content'">
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label>Motor de Base de datos:</label>
+        <dx-select-box #cmbMotorBaseDeDatos [(value)]="servidor.configuracion.motorBaseDeDatosId" [items]="motoresBasesDeDatos" displayExpr="descripcion"
+          valueExpr="id" [searchEnabled]="true">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Debe seleccionar el motor de base de datos"></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>Usuario:</label>
+        <dx-text-box #txtUsuario [(value)]="servidor.configuracion.usuario" [maxLength]="50">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>Clave:</label>
+        <dx-text-box mode="password" #txtClave [(value)]="servidor.configuracion.clave" [maxLength]="50">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+      <div class="form-group col-md-8">
+        <label>Dirección:</label>
+        <dx-text-box #txtDireccion [(value)]="servidor.configuracion.direccion" [maxLength]="50">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Puerto:</label>
+        <dx-text-box #txtPuerto [(value)]="servidor.configuracion.puerto" [maxLength]="50">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="La descripción es requerida"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+
+      <div class="col-md-12">
+        <button class="btn btn-fill btn-primary" (click)="showModalConfiguarciones = false">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</dx-popup>
